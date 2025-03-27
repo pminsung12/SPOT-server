@@ -115,7 +115,7 @@ public class ReviewEntity extends BaseEntity {
     private ReviewType reviewType;
 
     @Version
-    @ColumnDefault("0L")
+    @ColumnDefault("0")
     @Column(name = "version")
     private Long version;
 

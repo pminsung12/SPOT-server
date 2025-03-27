@@ -45,7 +45,7 @@ subprojects {
         testImplementation("org.junit.jupiter:junit-jupiter")
 
         // secret manager
-        implementation("io.awspring.cloud:spring-cloud-starter-aws-secrets-manager-config:_")
+        // implementation("io.awspring.cloud:spring-cloud-starter-aws-secrets-manager-config:_")
     }
 
     // 코드 포맷터 spotless
