@@ -6,6 +6,7 @@ import org.depromeet.spot.usecase.port.in.member.UpdateMemberUsecase;
 import org.depromeet.spot.usecase.port.in.review.DeleteReviewUsecase;
 import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase;
 import org.depromeet.spot.usecase.port.out.review.ReviewRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class DeleteReviewService implements DeleteReviewUsecase {
     private final UpdateMemberUsecase updateMemberUsecase;
     private final ReadMemberUsecase readMemberUsecase;
 
+    @CacheEvict(value = "blockReviews", allEntries = true)
     @Override
     @Transactional
     public Long deleteReview(Long reviewId, Long memberId) {

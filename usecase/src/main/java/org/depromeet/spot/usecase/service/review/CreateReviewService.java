@@ -12,6 +12,7 @@ import org.depromeet.spot.usecase.service.member.processor.MemberLevelProcessor;
 import org.depromeet.spot.usecase.service.review.processor.ReviewCreationProcessor;
 import org.depromeet.spot.usecase.service.review.processor.ReviewImageProcessor;
 import org.depromeet.spot.usecase.service.review.processor.ReviewKeywordProcessor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,7 @@ public class CreateReviewService implements CreateReviewUsecase {
     private final ReviewKeywordProcessor reviewKeywordProcessor;
     private final MemberLevelProcessor memberLevelProcessor;
 
+    @CacheEvict(value = "blockReviews", allEntries = true)
     @Override
     @Transactional
     public CreateReviewResult create(Long blockId, Long memberId, CreateReviewCommand command) {
