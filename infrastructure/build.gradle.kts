@@ -27,7 +27,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-aws:_")
 
     // redis
-//    implementation("org.springframework.boot:spring-boot-starter-data-redis:_")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis:_")
 //    implementation("org.redisson:redisson-spring-boot-starter:_")
 //    implementation("it.ozimov:embedded-redis:_") {
 //        exclude(group = "org.slf4j", module = "slf4j-simple")
