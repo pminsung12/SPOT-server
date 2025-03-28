@@ -24,16 +24,19 @@ import org.depromeet.spot.usecase.port.out.review.ReviewScrapRepository;
 import org.depromeet.spot.usecase.port.out.team.BaseballTeamRepository;
 import org.depromeet.spot.usecase.service.review.processor.PaginationProcessor;
 import org.depromeet.spot.usecase.service.review.processor.ReadReviewProcessor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Builder
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class ReadReviewService implements ReadReviewUsecase {
 
     private final ReviewRepository reviewRepository;
@@ -50,6 +53,11 @@ public class ReadReviewService implements ReadReviewUsecase {
     private static final int TOP_KEYWORDS_LIMIT = 5;
     private static final int TOP_IMAGES_LIMIT = 5;
 
+    @Cacheable(
+            value = "blockReviews",
+            key =
+                    "T(org.depromeet.spot.common.util.CacheKeyUtil).generateBlockReviewKey(#stadiumId, #blockCode, #rowNumber, #seatNumber, #year, #month, #sortBy)",
+            unless = "#result == null")
     @Override
     public BlockReviewListResult findReviewsByStadiumIdAndBlockCode(
             Long memberId,
@@ -63,6 +71,7 @@ public class ReadReviewService implements ReadReviewUsecase {
             SortCriteria sortBy,
             Integer size) {
 
+        log.info("[CACHE MISS] 실제 DB 조회 발생");
         // LocationInfo 조회
         LocationInfo locationInfo =
                 reviewRepository.findLocationInfoByStadiumIdAndBlockCode(stadiumId, blockCode);
