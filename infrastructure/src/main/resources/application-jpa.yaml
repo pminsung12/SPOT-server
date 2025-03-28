@@ -19,7 +19,10 @@ spring:
     sql:
         init:
             mode: never  # 필요한 경우 'never'로 변경
-
+    data:
+        redis:
+            host: localhost
+            port: 6379
 
 server:
     port: 8080
