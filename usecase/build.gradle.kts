@@ -15,7 +15,7 @@ dependencies {
 
 
     // Mixpanel
-    implementation("com.mixpanel:mixpanel-java:_")
+//    implementation("com.mixpanel:mixpanel-java:_")
 
 }
 
