@@ -2,9 +2,9 @@ package org.depromeet.spot.application.review.dto.response;
 
 import java.util.List;
 
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.BlockKeywordInfo;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.BlockReviewListResult;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.LocationInfo;
+import org.depromeet.spot.usecase.port.in.review.BlockKeywordInfo;
+import org.depromeet.spot.usecase.port.in.review.BlockReviewListResult;
+import org.depromeet.spot.usecase.port.in.review.LocationInfo;
 
 public record BlockReviewListResponse(
         LocationInfo location,
