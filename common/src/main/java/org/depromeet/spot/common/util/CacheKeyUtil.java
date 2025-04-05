@@ -1,9 +1,6 @@
 package org.depromeet.spot.common.util;
 
-import org.depromeet.spot.domain.review.Review.SortCriteria;
-
 public class CacheKeyUtil {
-
     public static String generateBlockReviewKey(
             Long stadiumId,
             String blockCode,
@@ -11,15 +8,18 @@ public class CacheKeyUtil {
             Integer seatNumber,
             Integer year,
             Integer month,
-            SortCriteria sortBy) {
-        return String.format(
-                "stadium:%d:block:%s:row:%s:seat:%s:year:%s:month:%s:sort:%s",
-                stadiumId,
-                blockCode,
-                rowNumber != null ? rowNumber : "any",
-                seatNumber != null ? seatNumber : "any",
-                year != null ? year : "any",
-                month != null ? month : "any",
-                sortBy != null ? sortBy.name() : "DATE_TIME");
+            String sortBy,
+            String cursor) {
+        StringBuilder key = new StringBuilder("block:");
+
+        key.append(stadiumId).append(":").append(blockCode).append(":").append(sortBy);
+
+        if (cursor != null) key.append(":cursor=").append(cursor);
+        if (rowNumber != null) key.append(":row=").append(rowNumber);
+        if (seatNumber != null) key.append(":seat=").append(seatNumber);
+        if (year != null) key.append(":year=").append(year);
+        if (month != null) key.append(":month=").append(month);
+
+        return key.toString();
     }
 }
