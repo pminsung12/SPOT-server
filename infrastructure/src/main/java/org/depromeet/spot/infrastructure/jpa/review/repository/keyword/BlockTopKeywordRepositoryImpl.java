@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.BlockKeywordInfo;
+import org.depromeet.spot.usecase.port.in.review.BlockKeywordInfo;
 import org.depromeet.spot.usecase.port.out.review.BlockTopKeywordRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;

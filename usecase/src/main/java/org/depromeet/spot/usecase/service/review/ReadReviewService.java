@@ -13,6 +13,13 @@ import org.depromeet.spot.domain.review.ReviewYearMonth;
 import org.depromeet.spot.domain.review.keyword.Keyword;
 import org.depromeet.spot.domain.review.keyword.ReviewKeyword;
 import org.depromeet.spot.domain.team.BaseballTeam;
+import org.depromeet.spot.usecase.port.in.review.BlockKeywordInfo;
+import org.depromeet.spot.usecase.port.in.review.BlockReviewListResult;
+import org.depromeet.spot.usecase.port.in.review.LocationInfo;
+import org.depromeet.spot.usecase.port.in.review.MemberInfoOnMyReviewResult;
+import org.depromeet.spot.usecase.port.in.review.MyRecentReviewResult;
+import org.depromeet.spot.usecase.port.in.review.MyReviewListResult;
+import org.depromeet.spot.usecase.port.in.review.ReadReviewResult;
 import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase;
 import org.depromeet.spot.usecase.port.out.member.MemberRepository;
 import org.depromeet.spot.usecase.port.out.review.BlockTopKeywordRepository;
@@ -24,16 +31,19 @@ import org.depromeet.spot.usecase.port.out.review.ReviewScrapRepository;
 import org.depromeet.spot.usecase.port.out.team.BaseballTeamRepository;
 import org.depromeet.spot.usecase.service.review.processor.PaginationProcessor;
 import org.depromeet.spot.usecase.service.review.processor.ReadReviewProcessor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Builder
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class ReadReviewService implements ReadReviewUsecase {
 
     private final ReviewRepository reviewRepository;
@@ -50,6 +60,11 @@ public class ReadReviewService implements ReadReviewUsecase {
     private static final int TOP_KEYWORDS_LIMIT = 5;
     private static final int TOP_IMAGES_LIMIT = 5;
 
+    @Cacheable(
+            value = "blockReviews",
+            key =
+                    "T(org.depromeet.spot.common.util.CacheKeyUtil).generateBlockReviewKey(#stadiumId, #blockCode, #rowNumber, #seatNumber, #year, #month, #sortBy, #cursor)",
+            unless = "#result == null")
     @Override
     public BlockReviewListResult findReviewsByStadiumIdAndBlockCode(
             Long memberId,
@@ -63,6 +78,7 @@ public class ReadReviewService implements ReadReviewUsecase {
             SortCriteria sortBy,
             Integer size) {
 
+        log.info("[CACHE MISS] 실제 DB 조회 발생");
         // LocationInfo 조회
         LocationInfo locationInfo =
                 reviewRepository.findLocationInfoByStadiumIdAndBlockCode(stadiumId, blockCode);

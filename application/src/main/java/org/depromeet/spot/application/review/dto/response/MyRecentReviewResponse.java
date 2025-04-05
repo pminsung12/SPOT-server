@@ -1,7 +1,7 @@
 package org.depromeet.spot.application.review.dto.response;
 
 import org.depromeet.spot.domain.review.Review;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.MyRecentReviewResult;
+import org.depromeet.spot.usecase.port.in.review.MyRecentReviewResult;
 
 import lombok.Builder;
 

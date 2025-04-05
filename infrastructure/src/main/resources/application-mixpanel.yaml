@@ -1,2 +1,2 @@
-mixpanel:
-    token: ${MIXPANEL_TOKEN}
+#mixpanel:
+#    token: ${MIXPANEL_TOKEN}

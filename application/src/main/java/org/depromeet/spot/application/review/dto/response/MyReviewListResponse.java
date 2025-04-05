@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.depromeet.spot.application.review.dto.response.BlockReviewListResponse.BlockFilter;
 import org.depromeet.spot.domain.review.Review;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.MyReviewListResult;
+import org.depromeet.spot.usecase.port.in.review.MyReviewListResult;
 
 public record MyReviewListResponse(
         List<MyReviewResponse> reviews, String nextCursor, boolean hasNext, BlockFilter filter) {

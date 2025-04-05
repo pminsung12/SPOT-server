@@ -16,7 +16,7 @@ import java.util.List;
 import org.depromeet.spot.domain.review.Review.ReviewType;
 import org.depromeet.spot.domain.review.Review.SortCriteria;
 import org.depromeet.spot.infrastructure.jpa.review.entity.ReviewEntity;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.LocationInfo;
+import org.depromeet.spot.usecase.port.in.review.LocationInfo;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.BooleanBuilder;

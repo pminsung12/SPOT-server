@@ -3,11 +3,13 @@ package org.depromeet.spot.domain.member;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public class Level {
 
     // of는 오버로딩으로 파라미터 수에 따라 사용됨. 10개 이상은 오버로딩 없어서 오류가 발생하니 주의!
@@ -39,6 +41,26 @@ public class Level {
     private final LocalDateTime updatedAt;
     private final LocalDateTime deletedAt;
 
+    @JsonCreator
+    public Level(
+            @JsonProperty("id") Long id,
+            @JsonProperty("value") int value,
+            @JsonProperty("title") String title,
+            @JsonProperty("mascotImageUrl") String mascotImageUrl,
+            @JsonProperty("levelUpImageUrl") String levelUpImageUrl,
+            @JsonProperty("createdAt") LocalDateTime createdAt,
+            @JsonProperty("updatedAt") LocalDateTime updatedAt,
+            @JsonProperty("deletedAt") LocalDateTime deletedAt) {
+        this.id = id;
+        this.value = value;
+        this.title = title;
+        this.mascotImageUrl = mascotImageUrl;
+        this.levelUpImageUrl = levelUpImageUrl;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
     public static int calculateLevel(final long reviewCnt) {
         if (reviewCnt >= LEVEL_MINIMUM_CONDITIONS.get(6)) {
             return 6;
@@ -65,10 +87,12 @@ public class Level {
         return LEVEL_MINIMUM_CONDITIONS.get(level + 1) - reviewCnt;
     }
 
+    @JsonIgnore
     public int getMinimum() {
         return LEVEL_MINIMUM_CONDITIONS.get(value);
     }
 
+    @JsonIgnore
     public Integer getMaximum() {
         if (value > 5) return null;
         return LEVEL_MAXIMUM_CONDITIONS.get(value);

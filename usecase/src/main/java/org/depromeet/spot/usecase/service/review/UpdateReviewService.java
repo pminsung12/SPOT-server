@@ -11,6 +11,7 @@ import org.depromeet.spot.usecase.service.review.processor.ReadReviewProcessor;
 import org.depromeet.spot.usecase.service.review.processor.ReviewCreationProcessor;
 import org.depromeet.spot.usecase.service.review.processor.ReviewDataProcessor;
 import org.depromeet.spot.usecase.service.review.processor.ReviewKeywordProcessor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,9 @@ public class UpdateReviewService implements UpdateReviewUsecase {
     private final ReviewCreationProcessor reviewCreationProcessor;
     private final ReadReviewProcessor readReviewProcessor;
 
+    @CacheEvict(value = "blockReviews", allEntries = true)
+    @Override
+    @Transactional
     public UpdateReviewResult updateReview(
             Long memberId, Long reviewId, UpdateReviewCommand command) {
         // 1. review id로 조회
