@@ -28,7 +28,7 @@ dependencies {
 
     // redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis:_")
-//    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:_")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:_")
 
 //    testImplementation("it.ozimov:embedded-redis:_") {
 //        exclude(group = "org.slf4j", module = "slf4j-simple")
@@ -43,6 +43,9 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:_")
     testImplementation("org.testcontainers:mysql:_")
     testImplementation("org.testcontainers:jdbc:_")
+
+    testImplementation("org.springframework.boot:spring-boot-test")
+    testImplementation("org.springframework.boot:spring-boot-test-autoconfigure")
 //    testImplementation("org.testcontainers:redis:_")
 
     // webflux (HTTP 요청에 사용)
