@@ -17,11 +17,11 @@ import org.depromeet.spot.application.review.dto.response.MyReviewListResponse;
 import org.depromeet.spot.application.review.dto.response.ReviewMonthsResponse;
 import org.depromeet.spot.domain.review.Review.ReviewType;
 import org.depromeet.spot.domain.review.ReviewYearMonth;
+import org.depromeet.spot.usecase.port.in.review.BlockReviewListResult;
+import org.depromeet.spot.usecase.port.in.review.MyRecentReviewResult;
+import org.depromeet.spot.usecase.port.in.review.MyReviewListResult;
+import org.depromeet.spot.usecase.port.in.review.ReadReviewResult;
 import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.BlockReviewListResult;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.MyRecentReviewResult;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.MyReviewListResult;
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.ReadReviewResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

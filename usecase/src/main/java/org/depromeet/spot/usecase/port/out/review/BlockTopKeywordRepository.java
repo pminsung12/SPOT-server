@@ -2,7 +2,7 @@ package org.depromeet.spot.usecase.port.out.review;
 
 import java.util.List;
 
-import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase.BlockKeywordInfo;
+import org.depromeet.spot.usecase.port.in.review.BlockKeywordInfo;
 
 public interface BlockTopKeywordRepository {
 
