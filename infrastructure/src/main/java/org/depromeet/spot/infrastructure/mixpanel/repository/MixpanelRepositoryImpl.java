@@ -1,19 +1,6 @@
+/*
 package org.depromeet.spot.infrastructure.mixpanel.repository;
 
-import java.io.IOException;
-
-import org.depromeet.spot.infrastructure.mixpanel.property.MixpanelProperties;
-import org.depromeet.spot.usecase.port.out.mixpanel.MixpanelRepository;
-import org.depromeet.spot.usecase.service.event.MixpanelEvent;
-import org.json.JSONObject;
-import org.springframework.stereotype.Component;
-
-import com.mixpanel.mixpanelapi.ClientDelivery;
-import com.mixpanel.mixpanelapi.MessageBuilder;
-import com.mixpanel.mixpanelapi.MixpanelAPI;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
@@ -50,3 +37,4 @@ public class MixpanelRepositoryImpl implements MixpanelRepository {
         }
     }
 }
+*/
