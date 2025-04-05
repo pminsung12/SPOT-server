@@ -13,6 +13,13 @@ import org.depromeet.spot.domain.review.ReviewYearMonth;
 import org.depromeet.spot.domain.review.keyword.Keyword;
 import org.depromeet.spot.domain.review.keyword.ReviewKeyword;
 import org.depromeet.spot.domain.team.BaseballTeam;
+import org.depromeet.spot.usecase.port.in.review.BlockKeywordInfo;
+import org.depromeet.spot.usecase.port.in.review.BlockReviewListResult;
+import org.depromeet.spot.usecase.port.in.review.LocationInfo;
+import org.depromeet.spot.usecase.port.in.review.MemberInfoOnMyReviewResult;
+import org.depromeet.spot.usecase.port.in.review.MyRecentReviewResult;
+import org.depromeet.spot.usecase.port.in.review.MyReviewListResult;
+import org.depromeet.spot.usecase.port.in.review.ReadReviewResult;
 import org.depromeet.spot.usecase.port.in.review.ReadReviewUsecase;
 import org.depromeet.spot.usecase.port.out.member.MemberRepository;
 import org.depromeet.spot.usecase.port.out.review.BlockTopKeywordRepository;
@@ -56,7 +63,7 @@ public class ReadReviewService implements ReadReviewUsecase {
     @Cacheable(
             value = "blockReviews",
             key =
-                    "T(org.depromeet.spot.common.util.CacheKeyUtil).generateBlockReviewKey(#stadiumId, #blockCode, #rowNumber, #seatNumber, #year, #month, #sortBy)",
+                    "T(org.depromeet.spot.common.util.CacheKeyUtil).generateBlockReviewKey(#stadiumId, #blockCode, #rowNumber, #seatNumber, #year, #month, #sortBy, #cursor)",
             unless = "#result == null")
     @Override
     public BlockReviewListResult findReviewsByStadiumIdAndBlockCode(
