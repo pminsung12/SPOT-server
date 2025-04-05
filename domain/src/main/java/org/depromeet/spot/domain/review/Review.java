@@ -1,5 +1,6 @@
 package org.depromeet.spot.domain.review;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,16 @@ import org.depromeet.spot.domain.seat.Seat;
 import org.depromeet.spot.domain.section.Section;
 import org.depromeet.spot.domain.stadium.Stadium;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-public class Review {
+@EqualsAndHashCode
+public class Review implements Serializable {
 
     public enum ReviewType {
         VIEW, // 시야 후기
@@ -56,24 +62,27 @@ public class Review {
     public boolean isLiked;
     public boolean isScrapped;
 
+    @JsonCreator
     @Builder
     public Review(
-            Long id,
-            Member member,
-            Stadium stadium,
-            Section section,
-            Block block,
-            BlockRow row,
-            Seat seat,
-            LocalDateTime dateTime,
-            String content,
-            LocalDateTime deletedAt,
-            List<ReviewImage> images,
-            List<ReviewKeyword> keywords,
-            int likesCount,
-            int scrapsCount,
-            ReviewType reviewType,
-            Long version) {
+            @JsonProperty("id") Long id,
+            @JsonProperty("member") Member member,
+            @JsonProperty("stadium") Stadium stadium,
+            @JsonProperty("section") Section section,
+            @JsonProperty("block") Block block,
+            @JsonProperty("row") BlockRow row,
+            @JsonProperty("seat") Seat seat,
+            @JsonProperty("dateTime") LocalDateTime dateTime,
+            @JsonProperty("content") String content,
+            @JsonProperty("deletedAt") LocalDateTime deletedAt,
+            @JsonProperty("images") List<ReviewImage> images,
+            @JsonProperty("keywords") List<ReviewKeyword> keywords,
+            @JsonProperty("likesCount") int likesCount,
+            @JsonProperty("scrapsCount") int scrapsCount,
+            @JsonProperty("reviewType") ReviewType reviewType,
+            @JsonProperty("version") Long version,
+            @JsonProperty("liked") boolean isLiked,
+            @JsonProperty("scrapped") boolean isScrapped) {
         if (likesCount < 0) {
             throw new InvalidReviewLikesException();
         }
@@ -94,6 +103,8 @@ public class Review {
         this.scrapsCount = scrapsCount;
         this.reviewType = reviewType;
         this.version = version;
+        this.isLiked = isLiked;
+        this.isScrapped = isScrapped;
     }
 
     public void addKeyword(ReviewKeyword keyword) {
@@ -171,6 +182,8 @@ public class Review {
                 this.likesCount,
                 this.scrapsCount,
                 this.reviewType,
-                this.version);
+                this.version,
+                this.isLiked,
+                this.isScrapped);
     }
 }
