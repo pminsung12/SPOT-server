@@ -40,7 +40,7 @@ public class CacheConfig {
 
         // 커스텀 캐시 TTL 설정
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
-        cacheConfigs.put("blockReviews", defaultConfig.entryTtl(Duration.ofSeconds(5))); // 리뷰는 10초
+        cacheConfigs.put("blockReviews", defaultConfig.entryTtl(Duration.ofSeconds(5))); // 리뷰는 5초
         cacheConfigs.put(
                 "locationInfo", defaultConfig.entryTtl(Duration.ofHours(24))); // 고정 정보는 24시간
         cacheConfigs.put("topReviewImages", defaultConfig.entryTtl(Duration.ofMinutes(60)));
