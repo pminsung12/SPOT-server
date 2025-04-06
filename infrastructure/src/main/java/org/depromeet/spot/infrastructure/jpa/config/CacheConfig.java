@@ -1,6 +1,8 @@
 package org.depromeet.spot.infrastructure.jpa.config;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -25,7 +27,8 @@ public class CacheConfig {
         GenericJackson2JsonRedisSerializer serializer =
                 new GenericJackson2JsonRedisSerializer(redisObjectMapper);
 
-        RedisCacheConfiguration defaultCacheConfig =
+        // default TTL (5초)
+        RedisCacheConfiguration defaultConfig =
                 RedisCacheConfiguration.defaultCacheConfig()
                         .entryTtl(Duration.ofSeconds(5))
                         .serializeKeysWith(
@@ -35,8 +38,17 @@ public class CacheConfig {
                                 RedisSerializationContext.SerializationPair.fromSerializer(
                                         serializer));
 
+        // 커스텀 캐시 TTL 설정
+        Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
+        cacheConfigs.put("blockReviews", defaultConfig.entryTtl(Duration.ofSeconds(5))); // 리뷰는 5초
+        cacheConfigs.put(
+                "locationInfo", defaultConfig.entryTtl(Duration.ofHours(24))); // 고정 정보는 24시간
+        cacheConfigs.put("topReviewImages", defaultConfig.entryTtl(Duration.ofMinutes(60)));
+        cacheConfigs.put("topKeywords", defaultConfig.entryTtl(Duration.ofMinutes(60)));
+
         return RedisCacheManager.builder(connectionFactory)
-                .cacheDefaults(defaultCacheConfig)
+                .cacheDefaults(defaultConfig)
+                .withInitialCacheConfigurations(cacheConfigs)
                 .build();
     }
 }
