@@ -56,6 +56,7 @@ public class ReadReviewService implements ReadReviewUsecase {
     private final ReviewScrapRepository reviewScrapRepository;
     private final ReadReviewProcessor readReviewProcessor;
     private final PaginationProcessor paginationProcessor;
+    private final ReviewMetadataService reviewMetadataService;
 
     private static final int TOP_KEYWORDS_LIMIT = 5;
     private static final int TOP_IMAGES_LIMIT = 5;
@@ -80,8 +81,7 @@ public class ReadReviewService implements ReadReviewUsecase {
 
         log.info("[CACHE MISS] 실제 DB 조회 발생");
         // LocationInfo 조회
-        LocationInfo locationInfo =
-                reviewRepository.findLocationInfoByStadiumIdAndBlockCode(stadiumId, blockCode);
+        LocationInfo locationInfo = reviewMetadataService.getLocationInfo(stadiumId, blockCode);
 
         // stadiumId랑 blockCode로 blockId를 조회 후 이걸 통해 reviews를 조회
         List<Review> reviews =
@@ -107,13 +107,11 @@ public class ReadReviewService implements ReadReviewUsecase {
 
         //  stadiumId랑 blockCode로 blockId를 조회 후 이걸 통해 topKeywords를 조회
         List<BlockKeywordInfo> topKeywords =
-                blockTopKeywordRepository.findTopKeywordsByStadiumIdAndBlockCode(
-                        stadiumId, blockCode, TOP_KEYWORDS_LIMIT);
+                reviewMetadataService.getTopKeywords(stadiumId, blockCode);
 
         // stadiumId랑 blockCode로 blockId를 조회 후 이걸 통해 topImages를 조회
         List<Review> topReviewImages =
-                reviewImageRepository.findTopReviewImagesByStadiumIdAndBlockCode(
-                        stadiumId, blockCode, TOP_IMAGES_LIMIT);
+                reviewMetadataService.getTopReviewImages(stadiumId, blockCode);
 
         List<Review> topReviewImagesWithKeywords = mapKeywordsToReviews(topReviewImages);
 
